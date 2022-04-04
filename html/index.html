@@ -1,0 +1,277 @@
+<html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js" -->
+<!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <script>
+        window.addEventListener('load', (event) => {
+            console.log('page is fully loaded');
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", e => {
+            const form = document.querySelector("#searchform")
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const query = form.elements.query.value;
+                const ticketquery = await axios.get(`https://app.ticketmaster.com/discovery/v2/attractions.json?apikey=KNcuyTpIb5us9ZvJcJrtfwT7SMhFiyJk&keyword=${query}`)
+                const youtubequery = await axios.get(`https://www.googleapis.com/youtube/v3/search?key=AIzaSyCrpAF9lG4Isc-Gnnzx76JbbADJS5estfE&type=video&part=snippet&maxResults=12&q=${query}`)
+
+                for (let i = 0; i < 10; i++) {
+                    const divticket = document.createElement('div-ticket')
+                    const divvideos = document.createElement('div-videos')
+                    const link = document.createElement('a')
+                    const img = document.createElement('img')
+                    const video = document.createElement('video')
+                    const thumb = document.createElement('img')
+                    const name = document.createTextNode(ticketquery.data._embedded.attractions[i].name)
+                    const url = document.createTextNode(ticketquery.data._embedded.attractions[i].url)
+                    const title = document.createTextNode(youtubequery.data.items[i].snippet.title)
+                    //const thumb = document.createTextNode(youtubequery.data.items[0].snippet.thumbnails.default.url)
+                    //const player = document.createElement(youtubequery.items)
+                    img.src = ticketquery.data._embedded.attractions[i].images[0].url
+                    thumb.src = youtubequery.data.items[i].snippet.thumbnails.default.url
+                    link.append(url)
+                    divticket.appendChild(name, img.src)
+                    divvideos.appendChild(title, thumb.src, video)
+
+                    document.body.append(divticket, link, img);
+                    document.body.append(divvideos, thumb)
+
+                }
+
+
+                if (ticketquery.status >= 400 && ticketquery.status < 600) {
+                    console.log(`error: ${ticketquery.status}`);
+                    throw new Error("Bad ticketqueryponse from server");
+                }
+
+            }
+            )
+        })
+    </script>
+    <style>
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        blockquote,
+        q {
+            quotes: none;
+        }
+
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        input:invalid {
+            border: 2px red;
+        }
+
+        * {
+            box-sizing: border-box;
+            border: 2px red;
+        }
+
+        html {
+            font-family: "Lucida Sans", sans-serif;
+        }
+
+        img {
+            width: 33%;
+            height: auto;
+        }
+
+        video {
+            width: 33%;
+            height: auto;
+        }
+
+        @media all and (min-width: 1024px) and (max-width: 1280px) {}
+
+        @media all and (min-width: 768px) and (max-width: 1024px) {}
+
+        @media all and (min-width: 480px) and (max-width: 768px) {}
+
+        @media all and (max-width: 480px) {}
+
+
+        /* Portrait */
+        @media screen and (orientation:portrait) {
+            /* Portrait styles here */
+        }
+
+        /* Landscape */
+        @media screen and (orientation:landscape) {
+            /* Landscape styles here */
+        }
+
+
+        /* CSS for iPhone, iPad, and Retina Displays */
+
+        /* Non-Retina */
+        @media screen and (-webkit-max-device-pixel-ratio: 1) {}
+
+        /* Retina */
+        @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+        only screen and (-o-min-device-pixel-ratio: 3/2),
+        only screen and (min--moz-device-pixel-ratio: 1.5),
+        only screen and (min-device-pixel-ratio: 1.5) {}
+
+        /* iPhone Portrait */
+        @media screen and (max-device-width: 480px) and (orientation:portrait) {}
+
+        /* iPhone Landscape */
+        @media screen and (max-device-width: 480px) and (orientation:landscape) {}
+
+        /* iPad Portrait */
+        @media screen and (min-device-width: 481px) and (orientation:portrait) {}
+
+        /* iPad Landscape */
+        @media screen and (min-device-width: 481px) and (orientation:landscape) {}
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <form id="searchform">
+        <input type="text" placeholder="Search" name="query" required="required">
+        <button type="submit">Submit form</button>
+    </form>
+
+</body>
+
+</html>
