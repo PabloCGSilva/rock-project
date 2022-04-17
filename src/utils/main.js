@@ -18,20 +18,26 @@ function myFunction(query) {
             const name = document.createTextNode(ticketquery.data._embedded.attractions[i].name)
             const url = document.createTextNode(ticketquery.data._embedded.attractions[i].url)
             const title = document.createTextNode(youtubequery.data.items[i].snippet.title)
-            const link = document.createElement('a')
+            console.log(url)
+            const link = document.createTextNode(youtubequery.data.items[i].id.videoId)
+            const a = document.createElement('a')
             const img = document.createElement('img')
             const video = document.createElement('video')
+            const linkvideo = document.createElement('a')
             const thumb = document.createElement('img')
 
-
+            a.href = url.textContent
+            linkvideo.href = 'https://www.youtube.com/watch?v='+link.textContent
             img.src = ticketquery.data._embedded.attractions[i].images[0].url
             thumb.src = youtubequery.data.items[i].snippet.thumbnails.default.url
-            link.append(url)
+
+            a.append(url)
+            linkvideo.append(link)
             divticket.appendChild(name, img.src)
             divvideos.appendChild(title, thumb.src, video)
 
-            document.body.append(divticket, link, img);
-            document.body.append(divvideos, thumb)
+            document.body.append(divticket, a, img);
+            document.body.append(divvideos, linkvideo, thumb)
         }
     }
     )
