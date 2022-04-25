@@ -6,6 +6,11 @@
 <!--<![endif]-->
 
 <head>
+    <html lang="en">
+
+    
+        <!-- <%- include('../partials/head'); %> -->
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
@@ -21,7 +26,7 @@
             console.log('page is fully loaded');
         });
     </script>
-    
+
 
 </head>
 
@@ -29,11 +34,21 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+
+
+    <!-- <header>
+        <%- include('../partials/header'); %>
+    </header> -->
     <form id="searchform">
         <input type="text" placeholder="Search" name="query" required="required">
         <button type="submit" onclick="myFunction()">Submit form</button>
         <script type="application/javascript" src="/main.js"></script>
     </form>
+
+    <!-- <footer>
+        <%- include('../partials/footer'); %>
+      </footer>
+       -->
 
 </body>
 
